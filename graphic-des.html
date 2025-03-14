@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lei's Graphic Design Works</title>
+    <style>
+        :root {
+            --bg-color: #f4f4f9;
+            --text-color: #333;
+            --header-bg: url('real-estate-header.jpg') no-repeat center center/cover;
+            --header-text-color: #343a40;
+            --section-bg: #fff;
+            --footer-bg: #343a40;
+            --footer-text-color: white;
+            --modal-bg: rgba(0, 0, 0, 0.9);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #333;
+            --text-color: #f4f4f9;
+            --header-bg: url('real-estate-header-dark.jpg') no-repeat center center/cover;
+            --header-text-color: #f4f4f9;
+            --section-bg: #444;
+            --footer-bg: #222;
+            --footer-text-color: #f4f4f9;
+            --modal-bg: rgba(255, 255, 255, 0.9);
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        header {
+            text-align: center;
+            background: var(--header-bg);
+            color: var(--header-text-color);
+            padding: 100px 20px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 3em;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+        header p {
+            font-size: 1.2em;
+            margin-top: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+        }
+        .section {
+            padding: 50px 20px;
+            text-align: center;
+            background-color: var(--section-bg);
+        }
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .portfolio-grid img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .portfolio-grid img:hover {
+            transform: scale(1.05);
+        }
+        footer {
+            text-align: center;
+            background-color: var(--footer-bg);
+            color: var(--footer-text-color);
+            padding: 20px;
+            font-size: 14px;
+        }
+        @media (min-width: 1024px) {
+            .portfolio-grid.real-estate {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: var(--modal-bg);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+        .modal-content img {
+            width: 100%;
+            height: auto;
+        }
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .theme-toggle {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+    <!-- Hero Section -->
+    <header>
+        <h1>Lei's Graphic Design Works</h1>
+        <p>Designs That Define Spaces</p>
+    </header>
+
+    <!-- Portfolio Section -->
+    <section class="section" id="portfolio">
+        <h2>Real Estate</h2>
+        <div class="portfolio-grid real-estate">
+            <!-- Replace these placeholders with your graphic design images -->
+            <img src="SAGE RESIDENCES (1).png" alt="Sage Residences" onclick="openModal(this)">
+            <img src="SAGE RESIDENCES.png" alt="Sage Residences 1" onclick="openModal(this)">
+            <img src="ZITAN PROJECT- ATHENA.png" alt="Zitan Residences" onclick="openModal(this)">
+            <img src="LE PONT.png" alt="Le Pont Residences" onclick="openModal(this)">
+            <img src="THE LATTICE.png" alt="The Lattice" onclick="openModal(this)">
+            <img src="THE LATTICE (1).png" alt="The Lattice 2" onclick="openModal(this)">
+        </div>
+    </section>
+    <section class="section" id="portfolio">
+        <h2>Logos</h2>
+        <div class="portfolio-grid">
+            <img src="GNC D - LOGO.png" alt="GNC Digitals Logo" onclick="openModal(this)">
+            <img src="2-2 Subject Logo.png" alt="BSCS 2-2 Logo" onclick="openModal(this)">
+        </div>
+    </section>
+
+    <!-- Modal for full-screen image -->
+    <div id="myModal" class="modal" onclick="closeModal(event)">
+        <span class="close" onclick="closeModal(event)">&times;</span>
+        <div class="modal-content">
+            <img id="modalImage" src="">
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Lei's Graphic Design Works. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        themeToggle.addEventListener('click', () => {
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                themeToggle.textContent = '🌙';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeToggle.textContent = '☀️';
+            }
+        });
+
+        function openModal(element) {
+            document.getElementById("modalImage").src = element.src;
+            document.getElementById("myModal").style.display = "flex";
+        }
+
+        function closeModal(event) {
+            if (event.target.classList.contains('modal') || event.target.classList.contains('close')) {
+                document.getElementById("myModal").style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
